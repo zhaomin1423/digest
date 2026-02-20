@@ -7,9 +7,7 @@
 ```
 ├── github/          # GitHub Issues/PRs 摘要
 ├── blog/            # 博客文章摘要
-├── youtube/         # YouTube 视频摘要
-├── run-all.sh       # 统一生成和推送脚本
-└── sync.sh          # (已弃用)
+└── youtube/         # YouTube 视频摘要
 ```
 
 ## 数据源
@@ -35,9 +33,9 @@
 
 ## 自动更新
 
-每天 22:00 执行 `run-all.sh`：
-1. 生成 GitHub Digest → 推送到 GitHub
-2. 生成 Blog Digest → 推送到 GitHub
-3. 生成 YouTube Digest → 推送到 GitHub
+每天 22:00 自动生成并推送到本仓库：
+1. GitHub Digest → 推送
+2. Blog Digest → 推送
+3. YouTube Digest → 推送
 
-每个摘要生成后立即单独推送，确保及时同步。
+每个摘要生成后立即单独推送。
