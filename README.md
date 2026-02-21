@@ -1,25 +1,25 @@
-# GitHub Digest
+# Daily Digests
 
-自动从 GitHub 仓库抓取 Issues 和 Pull Requests，生成中文日报并导入到 Obsidian。
+自动生成的每日摘要，包含 GitHub、博客和 YouTube 内容。
 
-## 功能
+## 目录结构
+
+```
+├── github/          # GitHub Issues/PRs 摘要
+├── blog/            # 博客文章摘要
+├── youtube/         # YouTube 视频摘要
+├── github_digest.py  # GitHub 摘要生成脚本
+├── repos.json        # GitHub 仓库配置
+└── run-digest.sh    # Cron 包装脚本
+```
+
+## GitHub Digest 功能
 
 - 使用 `gh` CLI 获取最近 24 小时内的 Issues 和 PRs
 - 使用豆包 API 生成中文摘要
 - 自动保存到 Obsidian vault 的 `GitHub Digest` 文件夹
 - 支持配置多个仓库
-
-## 项目结构
-
-```
-~/github-digest/
-├── github_digest.py      # 主脚本
-├── repos.json            # 仓库配置
-├── run-digest.sh         # Cron 包装脚本
-├── requirements.txt      # Python 依赖
-├── digests/              # 临时输出目录
-└── digest.log            # 执行日志
-```
+- 支持 `--date` 参数重新生成指定日期的摘要
 
 ## 安装
 
@@ -65,6 +65,11 @@ cd ~/github-digest
 python3 github_digest.py
 ```
 
+重新生成指定日期的摘要:
+```bash
+python3 github_digest.py --date 2026-02-20
+```
+
 ## 设置定时任务
 
 每天 22:00 自动执行:
@@ -79,49 +84,36 @@ crontab -e
 0 22 * * * /bin/bash /Users/zhaomin/github-digest/run-digest.sh
 ```
 
-## 输出示例
+## 数据源
 
-文件名: `github-digest-2026-02-20.md`
+### GitHub
+- Apache Fluss
+- Apache Flink
+- Apache Spark
+- Apache Iceberg
+- Apache Paimon
+- Ray (ray-project/ray)
+- Lance (lance-format/lance)
+- LanceDB (lancedb/lancedb)
+- Daft (Eventual-Inc/Daft)
 
-```markdown
-# GitHub 每日摘要
+### Blog
+- Databricks Blog
+- Anthropic News
+- OpenAI News (RSS)
 
-📅 **生成时间**: 2026-02-20 22:00:00
-⏰ **时间范围**: 过去 24 小时
-📊 **监控仓库数**: 1
+### YouTube
+- Matt Wolfe
+- Databricks
+- 小Lin说
+- Anthropic
+- OpenAI
 
----
+## 自动更新
 
-## Apache Fluss
+每天 22:00 自动生成并推送到本仓库：
+1. GitHub Digest → 推送
+2. Blog Digest → 推送
+3. YouTube Digest → 推送
 
-> 仓库: https://github.com/apache/fluss
-
-### 📋 Issues (3)
-
-#### 🟢 [BUG] 数据写入时出现内存溢出 #123
-
-| 属性 | 值 |
-|------|----|
-| 📅 创建时间 | 2小时前 |
-| 👤 作者 | user123 |
-| 🏷️ 状态 | open |
-
-**核心内容**: 用户报告在大规模数据写入场景下出现 OOM 问题...
-
----
-
-### 🔀 Pull Requests (2)
-
-#### 🟢 feat: 支持增量检查点 #456
-
-| 属性 | 值 |
-|------|----|
-| 📅 创建时间 | 5小时前 |
-| 👤 作者 | dev456 |
-| 🏷️ 状态 | open |
-| 📊 变更 | +500/-100 (15 文件) |
-
-**核心内容**: 新增增量检查点功能，可减少状态持久化时间约40%...
-
----
-```
+每个摘要生成后立即单独推送。
