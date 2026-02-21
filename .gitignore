@@ -1,5 +1,2 @@
-
-# Scripts (local only)
-run-all.sh
-sync.sh
-*.log
+.git
+digest/
