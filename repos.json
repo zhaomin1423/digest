@@ -1,0 +1,63 @@
+{
+  "repos": [
+    {
+      "name": "Apache Fluss",
+      "owner": "apache",
+      "repo": "fluss",
+      "enabled": true
+    },
+    {
+      "name": "Apache Flink",
+      "owner": "apache",
+      "repo": "flink",
+      "enabled": true
+    },
+    {
+      "name": "Apache Spark",
+      "owner": "apache",
+      "repo": "spark",
+      "enabled": true
+    },
+    {
+      "name": "Apache Iceberg",
+      "owner": "apache",
+      "repo": "iceberg",
+      "enabled": true
+    },
+    {
+      "name": "Apache Paimon",
+      "owner": "apache",
+      "repo": "paimon",
+      "enabled": true
+    },
+    {
+      "name": "Ray",
+      "owner": "ray-project",
+      "repo": "ray",
+      "enabled": true
+    },
+    {
+      "name": "Lance",
+      "owner": "lance-format",
+      "repo": "lance",
+      "enabled": true
+    },
+    {
+      "name": "LanceDB",
+      "owner": "lancedb",
+      "repo": "lancedb",
+      "enabled": true
+    },
+    {
+      "name": "Daft",
+      "owner": "Eventual-Inc",
+      "repo": "Daft",
+      "enabled": true
+    }
+  ],
+  "settings": {
+    "hours_back": 24,
+    "obsidian_vault": "/Users/zhaomin/Documents/Obsidian Vault",
+    "output_folder": "GitHub Digest"
+  }
+}
