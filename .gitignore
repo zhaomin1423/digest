@@ -1,2 +1,4 @@
 .git
 digest/
+run-all.sh
+logs/
