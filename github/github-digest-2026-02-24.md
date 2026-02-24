@@ -1,6 +1,6 @@
 # GitHub 每日摘要
 
-📅 **生成时间**: 2026-02-24 22:03:42
+📅 **生成时间**: 2026-02-24 22:12:17
 ⏰ **时间范围**: 过去 24 小时
 📊 **监控仓库数**: 8
 📋 **总计**: 28 Issues, 0 Pull Requests
@@ -31,7 +31,7 @@
 | 👤 作者 | LiebingYu |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 该 Issue 指出 Fluss 默认配置中 ZooKeeper 会话超时（60秒）长于 ISR 收缩时间（约45秒），导致网络故障时 ISR 在 Leader 被判定为失效前就已收缩，造成无可用 Leader。建议参考 Kafka 调整参数顺序，确保 ISR 收缩发生在 Leader 检测之后，以提升可用性。
+**核心内容**: Fluss 默认 ZooKeeper 会话超时（60秒）大于 ISR 收缩时间（约45秒），导致网络故障时 ISR 在 Leader 被判定死亡前已收缩，致使无可用 Leader。该 Issue 建议参考 Kafka 配置，调整相关超时参数以修复此可用性问题。
 
 #### 🔴 [[Lance writer should emit Arrow FixedSizeList for array columns to enable native vector search]](https://github.com/apache/fluss/issues/2706)
 
@@ -41,7 +41,7 @@
 | 👤 作者 | leekeiabstraction |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: Fluss 在将 ARRAY<FLOAT> 列写入 Lance 时，错误地使用了 Arrow 的变长 List 类型，导致 Lance 的原生向量搜索无法工作，因为 Lance 要求使用 FixedSizeList。问题根源在于 LanceArrowUtils.toArrowType() 中 ArrayType 被无条件映射为 ArrowType.List.INSTANCE。
+**核心内容**: Fluss 在将 ARRAY<FLOAT> 列写入 Lance 时，总是将其转换为 Arrow 的变长 List，导致 Lance 的原生向量搜索无法工作，因为 Lance 要求向量列为 FixedSizeList。问题源于 LanceArrowUtils.toArrowType() 中 ArrayType 无条件映射为 ArrowType.List.INSTANCE。
 
 #### 🔴 [[TableChangeWatcherTest.testTableChanges is not stable]](https://github.com/apache/fluss/issues/1018)
 
@@ -51,7 +51,7 @@
 | 👤 作者 | wuchong |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: GitHub Issue 报告 Fluss 项目中 `TableChangeWatcherTest.testTableChanges` 测试不稳定，CI 运行失败。错误显示断言失败，实际输出的 `CreateTableEvent` 列表与预期不符，涉及表路径、ID、分配等信息的差异。
+**核心内容**: 该 Issue 报告 Fluss 项目中 `TableChangeWatcherTest.testTableChanges` 测试不稳定，在 CI 运行中出现失败。错误日志显示断言失败，实际生成的 `CreateTableEvent` 列表与预期不符，涉及表信息、分配策略等字段的不匹配。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
@@ -83,7 +83,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | zhengruifeng |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 该 Issue 建议在 Issues 中添加“新贡献者信息”板块，以指导新贡献者。参考了 Pandas 仓库的相关做法。
+**核心内容**: 该 PR 建议在 Issues 中添加“新贡献者指南”以帮助新人参与，参考了 Pandas 项目的相关实践。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
@@ -103,7 +103,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | khjoshi94 |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: Apache Iceberg 1.10.1 中，当字符串分区值包含首尾空格时，Spark 过滤会返回空结果，导致与 Athena 行为不一致。这会引发空连接、转换和写入，且难以调试。期望 Iceberg 能规范化或警告空格，或在分区修剪时提示，而非静默返回空数据。
+**核心内容**: 该问题涉及 Apache Iceberg 1.10.1 版本。当表字符串分区值包含空格（如 "20240201 "）时，Spark 过滤查询返回空结果，导致跨引擎行为不一致及下游数据处理错误。期望 Iceberg 能规范化或校验分区值、提供警告或配置选项，而非当前直接存储原值并静默修剪文件，引发数据正确性问题。
 
 #### 🔴 [[Kafka connect S3tables support]](https://github.com/apache/iceberg/issues/15425)
 
@@ -113,7 +113,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | kyrick |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 用户询问 Kafka Connect 的 Iceberg sink connector 是否支持 S3 Tables。虽然支持 REST catalog，但用户尝试配置时遇到 S3 Access Denied 异常，推测未使用 vended credentials。核心问题是确认是否支持 S3 Tables。
+**核心内容**: 用户询问 Kafka Connect 的 Iceberg sink connector 是否支持 S3 Tables。尽管支持 REST catalog，但用户尝试配置时遇到 S3 Access Denied 异常，推测未使用 vended credentials。核心问题是确认该 connector 是否支持 S3 Tables。
 
 #### 🔴 [[Support Newer Delta Protocol Versions in Delta to Iceberg Migration Using Delta Kernel]](https://github.com/apache/iceberg/issues/15420)
 
@@ -123,7 +123,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | saitharun15 |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 当前 Delta-to-Iceberg 迁移依赖已弃用的 Delta Standalone，仅支持旧版协议（1,2），导致迁移新版 Delta 表（如 3,7）失败。建议改用 Delta Kernel API 以支持新版协议。
+**核心内容**: 当前 Delta 到 Iceberg 迁移依赖已废弃的 Delta Standalone，仅支持旧协议版本 (1,2)，无法处理新版本 (如 3,7)，导致迁移失败。建议改用 Delta Kernel API 以支持最新协议。
 
 #### 🔴 [[IcebergSource on FlinkJob with Pause/Resume missed data]](https://github.com/apache/iceberg/issues/15418)
 
@@ -133,7 +133,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | randomdev2026 |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 使用 Flink 的 IcebergSource 在暂停/恢复作业时，若停机期间生成了多个 Parquet 文件，恢复后仅读取最新的文件，导致中间数据丢失。配置使用 `INCREMENTAL_FROM_LATEST_SNAPSHOT` 策略，怀疑是配置问题。
+**核心内容**: 使用 Flink IcebergSource 的流式作业在暂停/恢复后，若停机期间产生了多个 Parquet 文件，恢复时仅读取最新文件，导致中间数据丢失。用户使用 Iceberg 1.10.1 和 Flink 2.0，作业配置为增量读取最新快照，怀疑是配置问题，需解决数据遗漏问题。
 
 #### 🔴 [[S3SignerServlet should strip out more request headers for caching]](https://github.com/apache/iceberg/issues/15417)
 
@@ -143,7 +143,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | steveloughran |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 建议 S3SignerServlet 在签名时忽略更多请求头（如 User-Agent 和 Referer），以提高缓存复用率并减少签名次数。当前仅排除 range 和部分 SDK 内部头，需扩展排除列表以优化性能。
+**核心内容**: 请求改进 S3SignerServlet，建议在签名时忽略更多请求头（如 user-agent 和 referrer）。这些头部通常由 JVM 或审计追踪生成，忽略它们可增加请求缓存复用，减少签名次数。当前仅排除 range 和部分 SDK 内部头部。
 
 #### 🔴 [[Implement the Java File Format API  for Vortex]](https://github.com/apache/iceberg/issues/15416)
 
@@ -153,7 +153,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | pvary |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 该 Issue 请求为 Vortex 格式实现新的 Java File Format API。任务包括完成 Java 集成、确保通过 TCK 测试 (#15415) 并展示性能结果。
+**核心内容**: 该 Issue 请求为 Vortex 格式实现 Java 版本的 File Format API。主要任务包括完成 Java 集成、确保通过 TCK 测试，并展示性能结果。
 
 #### 🔴 [[GCSAuthManager does not seem to support credentials refresh - jobs crash mid]](https://github.com/apache/iceberg/issues/15414)
 
@@ -163,7 +163,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | astronautas |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: Apache Iceberg 1.10.1 在 Spark 中使用 GCSAuthManager 时，作业运行数小时后因 OAuth2Credentials 不支持刷新访问令牌而崩溃，报错提示需使用支持刷新的实例或派生类型。
+**核心内容**: 在 Apache Iceberg 1.10.1 中，使用 GCSAuthManager 时，作业运行数小时后因 OAuth2Credentials 不支持刷新访问令牌而崩溃，提示需使用新令牌实例或支持刷新的派生类型。用户期望 GCSAuthManager 能自动刷新凭证。
 
 #### 🟢 [[bump roaringbitmap for spark 4.2 integration]](https://github.com/apache/iceberg/issues/15370)
 
@@ -173,7 +173,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | kevinjqliu |
 | 🏷️ 状态 | CLOSED
 
-**核心内容**: 为支持 Spark 4.2 集成，将 roaringbitmap 从 1.3.0 升级至 1.6.0 的 PR 因使用 jitpack 仓库可能影响下游而被回退（针对 1.11 版本）。此 Issue 用于追踪该升级，旨在商讨下一步最佳方案。
+**核心内容**: 此 Issue 追踪 Apache Iceberg 将 roaringbitmap 从 1.3.0 升级至 1.6.0 以适配 Spark 4.2 的事宜。此前因使用 jitpack 仓库的下游影响担忧，该升级被回退以支持 1.11 版本发布。现需商定后续最佳推进步骤。
 
 #### 🔴 [[Make Spark readers function asynchronously for many small files.]](https://github.com/apache/iceberg/issues/15287)
 
@@ -183,7 +183,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | varun-lakhyani |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: Spark readers目前顺序处理扫描任务，在处理大量小文件时导致CPU和I/O并行度利用率低。请求改进为可选支持并发处理多个小文件任务，通过缓冲行到共享迭代器提升性能，同时默认保持现有顺序行为。
+**核心内容**: 该请求建议改进Spark读取器，使其能异步处理大量小文件。当前读取器按顺序处理任务，导致CPU和I/O并行度不足，增加开销。建议允许多个小文件任务并发处理，缓冲行至共享迭代器，同时保留默认顺序行为。
 
 #### 🟢 [[Core: HadoopFileIO to take list of filesystem schemas to enable trash for]](https://github.com/apache/iceberg/issues/15093)
 
@@ -193,7 +193,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | steveloughran |
 | 🏷️ 状态 | CLOSED
 
-**核心内容**: 提议改进 HadoopFileIO，通过配置选项 `iceberg.hadoop.trash.schemas` 指定启用回收站的文件系统列表（默认为 "hdfs" 和 "viewfs"），以解决现有方案对类路径依赖、性能开销及灵活性不足的问题。需添加测试验证功能，更新文档，并恢复删除不存在路径不抛出异常的语义。
+**核心内容**: 提议改进 HadoopFileIO，通过新增配置 `iceberg.hadoop.trash.schemas` 指定启用 trash 的文件系统列表（默认为 hdfs 和 viewfs）。解决当前方案依赖类名导致的兼容性问题，减少实例化开销，并支持灵活控制。同时需恢复删除不存在文件不抛出异常的语义，添加测试及文档。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
@@ -229,11 +229,11 @@ _过去 24 小时内没有新的 Pull Requests_
 
 | 属性 | 值 |
 |------|----|
-| 📅 创建时间 | 11小时前 |
+| 📅 创建时间 | 12小时前 |
 | 👤 作者 | kszlim |
 | 🏷️ 状态 | CLOSED
 
-**核心内容**: lance==2.0.1 在解码元数据强制 `structural-encoding=miniblock` 且 `compression=zstd` 的原始时间戳列时触发 panic。错误发生在 `primitive.rs:1305`，提示“Mini-block dictionary encoding must use Variable, Flat, or General compression”。环境变量 `LANCE_ENCODING_DICT_TOO_SMALL` 可规避此问题。预期应正常解码或返回验证错误，而非崩溃。
+**核心内容**: lance==2.0.1 在解码时间戳列时触发 panic，当元数据强制使用 `structural-encoding=miniblock` 和 `compression=zstd` 时发生。错误源自 `primitive.rs:1305` 的 `unreachable!` 断言。期望应成功解码或返回优雅的错误，而非后台崩溃。设置 `LANCE_ENCODING_DICT_TOO_SMALL` 环境变量可暂时规避该问题。
 
 #### 🔴 [[Add clickbench results]](https://github.com/lance-format/lance/issues/5992)
 
@@ -243,7 +243,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | kszlim |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: 建议将 Lance 文件格式添加到 ClickBench 基准测试中，以评估其性能。参考 Vortex 和 Parquet 在 DataFusion/DuckDB 上的测试示例，希望将 Lance 也纳入其中。
+**核心内容**: 提议将 Lance 文件格式加入 Clickbench 基准测试，以评估其性能。参考 Vortex/Parquet 在 Clickbench 上通过 DataFusion/DuckDB 查询的示例，希望添加 Lance 的测试结果。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
@@ -263,7 +263,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | edwin-jsi |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: LanceDB 0.18 在 Ceph 上对包含 250 万行和两个标量索引的表执行 `compact_files` 时失败。报错信息显示“Row ids did not arrive in sorted order”，该错误与 lance-format/lance #2809 相关。
+**核心内容**: LanceDB 0.18 版本在表达到 250 万行后，执行 `compact_files` 时报错 "Row ids did not arrive in sorted order"。错误指向 Rust poll.rs 文件，疑似与已知 issue #2809 相关。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
@@ -283,7 +283,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | desmondcheongzx |
 | 🏷️ 状态 | CLOSED
 
-**核心内容**: SQL 中 `DATE_TRUNC` 函数无法使用，报错未找到。原因有二：1. 注册失败，因函数需非空参数；2. 内部名称为 "truncate" 而非 "date_trunc"。解决方案是修复注册和名称匹配，使其与 Python API 和标准 SQL 一致。
+**核心内容**: SQL中DATE_TRUNC函数报错未找到，尽管Python API可用。原因：1. 注册时因缺少参数静默失败；2. 内部注册名为"truncate"而非"date_trunc"。解决方案：修复注册逻辑和命名，使其在SQL中正常工作。
 
 #### 🔴 [[Poor CPU utilization with Ray cluster: RaySwordfishActor only uses single core despite multi-core workers available]](https://github.com/Eventual-Inc/Daft/issues/6126)
 
@@ -293,7 +293,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | haifengwang1987 |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: Ray 集群中 Daft 工作负载 CPU 利用率低，`RaySwordfishActor` 仅使用单核导致瓶颈，其他核心空闲。环境为 Daft 0.7.2、Ray 2.47.1、Ubuntu 22.04，配置 1 头节点（4 核）和 1 工作节点（36 核）。复现步骤基于官方文档嵌入基准测试，修改为本地读取并简化逻辑。
+**核心内容**: Daft 在 Ray 集群上运行时，尽管有多核 CPU 可用，`RaySwordfishActor` 进程仅占用单核（100% CPU），导致其他核心闲置，造成性能瓶颈。环境为 Daft 0.7.2、Ray 2.47.1、Ubuntu 22.04，集群配置为 1 个 Head 节点（4 核）和 1 个 Worker 节点（36 核）。问题通过修改官方文档嵌入基准测试复现。
 
 #### 🔴 [[SQL: tpc-DS q23 fails with schema mismatch error]](https://github.com/Eventual-Inc/Daft/issues/3561)
 
@@ -303,7 +303,7 @@ _过去 24 小时内没有新的 Pull Requests_
 | 👤 作者 | universalmind303 |
 | 🏷️ 状态 | OPEN
 
-**核心内容**: TPC-DS 查询 q23 在执行时因模式不匹配错误（schema mismatch error）失败，抛出 DaftCoreException。错误发生在调用 `daft.sql()` 并转换为 Arrow 表格的过程中，具体在 `to_arrow_iter` 迭分区时触发。
+**核心内容**: TPC-DS 查询 q23 因架构不匹配错误而失败，涉及 Da `to_arrow` 方法中的异常。
 
 ### 🔀 Pull Requests (0)
 _过去 24 小时内没有新的 Pull Requests_
