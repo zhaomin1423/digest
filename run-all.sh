@@ -6,7 +6,7 @@
 set -e  # 遇到错误时退出
 
 # 配置
-DIGEST_REPO="$HOME/digest"
+DIGEST_REPO="$HOME/workspace/digest"
 BLOG_DIGEST_DIR="$HOME/blog-digest"
 YOUTUBE_DIGEST_DIR="$HOME/youtube-digest"
 GITHUB_DIGEST_DIR="$HOME/github-digest"
