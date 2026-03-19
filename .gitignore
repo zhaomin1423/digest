@@ -2,3 +2,6 @@
 digest/
 run-all.sh
 logs/
+__pycache__/
+*.pyc
+*.pyo
