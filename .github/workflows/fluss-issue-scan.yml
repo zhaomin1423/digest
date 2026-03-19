@@ -1,0 +1,49 @@
+name: Fluss Issue Daily Scan
+
+on:
+  schedule:
+    # 每天 UTC 00:05 运行（北京时间 08:05）
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+    inputs:
+      fetch_all:
+        description: "获取全部 issue（true）还是仅过去 24 小时（false，默认）"
+        required: false
+        default: "false"
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Fluss issue scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXTRA_ARGS=""
+          if [ "${{ github.event.inputs.fetch_all }}" = "true" ]; then
+            EXTRA_ARGS="--all"
+          fi
+          python scripts/fluss_issue_scanner.py $EXTRA_ARGS
+
+      - name: Commit and push report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add github/fluss-issue-scan-*.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Fluss Issue Scan $(date -u +%Y-%m-%d)"
+            git push
+          fi
