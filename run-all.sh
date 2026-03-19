@@ -135,6 +135,21 @@ run_digest_and_push "YouTube" "$YOUTUBE_DIGEST_DIR" "$YOUTUBE_DIGEST_DIR/run-dig
 # 运行 GitHub Digest
 run_digest_and_push "GitHub" "$GITHUB_DIGEST_DIR" "$GITHUB_DIGEST_DIR/run-digest.sh" "github"
 
+# 运行 Fluss Issue 扫描器
+log "📌 Running Fluss Issue Scanner..."
+FLUSS_SCANNER="$DIGEST_REPO/scripts/fluss_issue_scanner.py"
+if [ -f "$FLUSS_SCANNER" ]; then
+    if python3 "$FLUSS_SCANNER" \
+        --output-dir "$DIGEST_REPO/github" \
+        --log-file "$LOG_DIR/fluss-scanner-$(date +%Y%m%d).log"; then
+        log "✅ Fluss Issue Scanner completed successfully"
+    else
+        log_error "Fluss Issue Scanner failed"
+    fi
+else
+    log "⚠️  Fluss Issue Scanner not found: $FLUSS_SCANNER - Skipping"
+fi
+
 # 推送到git仓库
 log "📤 Pushing to git repository..."
 cd "$DIGEST_REPO"
